@@ -8,35 +8,35 @@ require "digest/md5"
 require "curb"
 
 DataMapper::Logger.new($stdout, :debug)
-# DataMapper.setup(:default, 'mysql://localhost/shoulder_pads')
-# 
-# class ::Resource
-#   include DataMapper::Resource
-# 
-#   property :id, Serial
-#   property :short, String, :length => 40, :unique_index => true
-#   property :url, String, :length => 255, :required => true
-# 
-#   before :save, :generate_short
-# 
-#   def generate_short
-#     self.short = Digest::MD5.hexdigest("#{url}-#{Time.now}")
-#   end
-# 
-#   def uri
-#     @parsed ||= URI.parse(url)
-#   end
-# 
-#   def get
-#     Curl::Easy.perform(url)
-#   end
-# 
-#   def response(callback)
-#     [200, {'Content-Type' => 'text/javascript'}, "#{callback}(#{get.body_str})"]
-#   end
-# end
-# 
-# DataMapper.auto_upgrade!
+DataMapper.setup(:default, (ENV['DATABASE_URL'] || 'mysql://localhost/shoulder_pads'))
+
+class ::Resource
+  include DataMapper::Resource
+
+  property :id, Serial
+  property :short, String, :length => 40, :unique_index => true
+  property :url, String, :length => 255, :required => true
+
+  before :save, :generate_short
+
+  def generate_short
+    self.short = Digest::MD5.hexdigest("#{url}-#{Time.now}")
+  end
+
+  def uri
+    @parsed ||= URI.parse(url)
+  end
+
+  def get
+    Curl::Easy.perform(url)
+  end
+
+  def response(callback)
+    [200, {'Content-Type' => 'text/javascript'}, "#{callback}(#{get.body_str})"]
+  end
+end
+
+DataMapper.auto_upgrade!
 
 class ShoulderPads < Sinatra::Base
   include Sinatra::Helpers
