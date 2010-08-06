@@ -1,12 +1,44 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    activesupport (2.3.8)
+    addressable (2.1.2)
+    curb (0.7.7.1)
+    data_objects (0.10.2)
+      addressable (~> 2.1)
+    dm-core (1.0.0)
+      addressable (~> 2.1)
+      extlib (~> 0.9.15)
+    dm-do-adapter (1.0.0)
+      data_objects (~> 0.10.1)
+      dm-core (~> 1.0.0)
+    dm-migrations (1.0.0)
+      dm-core (~> 1.0.0)
+    dm-mysql-adapter (1.0.0)
+      dm-do-adapter (~> 1.0.0)
+      do_mysql (~> 0.10.2)
+    dm-validations (1.0.0)
+      dm-core (~> 1.0.0)
+    do_mysql (0.10.2)
+      data_objects (= 0.10.2)
+    extlib (0.9.15)
+    haml (3.0.13)
     rack (1.2.1)
     sinatra (1.0)
       rack (>= 1.0)
+    sinatra-helpers (0.2.0)
+      sinatra (>= 1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport
+  curb
+  dm-core
+  dm-migrations
+  dm-mysql-adapter
+  dm-validations
+  haml
   sinatra
+  sinatra-helpers
