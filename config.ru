@@ -32,7 +32,7 @@ class ::Resource
   end
 
   def response(callback)
-    200, {'Content-Type' => 'text/javascript'}, "#{callback}(#{get.response_str})"
+    [200, {'Content-Type' => 'text/javascript'}, "#{callback}(#{get.body_str})"]
   end
 end
 
@@ -52,8 +52,6 @@ class ShoulderPads < Sinatra::Base
 
   get '/u/:short' do
     @resource = Resource.first(:short => params['short'])
-    raise @resource.get.body_str
-
     halt *@resource.response(params['callback'] || "loadJsonp")
   end
 end
